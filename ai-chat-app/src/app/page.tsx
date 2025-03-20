@@ -5,11 +5,11 @@ export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-900">
       <div className="retro-monitor">
-        <div className="w-[600px] h-[400px] screen flex flex-col">
-          <div className="p-4 border-b border-green-500/30">
-            <h1 className="text-xl font-mono text-green-500">AI Chatbot</h1>
+        <div className="w-[500px] h-[400px] screen">
+          <div className="p-2 border-b border-green-500/30">
+            <h1 className="text-xl font-mono text-green-500">Gritty Assessment Chatbot</h1>
           </div>
-          <div className="flex-1">
+          <div className="h-[calc(400px-48px)]"> {/* Subtract header height */}
             <Chatbot />
           </div>
         </div>

@@ -11,20 +11,14 @@ export type Message = {
   role: "user" | "assistant" | "system";
 };
 
-const LoadingDots = () => {
-  useEffect(() => {
-    console.log("LoadingDots component mounted");
-  }, []);
-
-  return (
-    <div className="flex gap-1 items-center p-4 ml-10">
-      <span className="text-xs text-green-400 mr-2">AI Assistant is typing</span>
-      <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-      <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-      <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce"></div>
-    </div>
-  );
-};
+const LoadingDots = () => (
+  <div className="flex gap-1 items-center p-4 ml-10">
+    <span className="text-xs text-green-400 mr-2">AI Assistant is typing</span>
+    <div className="h-2 w-2 bg-green-500 rounded-full animate-[bounce_0.5s_infinite_-0.3s]"></div>
+    <div className="h-2 w-2 bg-green-500 rounded-full animate-[bounce_0.5s_infinite_-0.15s]"></div>
+    <div className="h-2 w-2 bg-green-500 rounded-full animate-[bounce_0.5s_infinite]"></div>
+  </div>
+);
 
 export default function Chatbot() {
   const [showChat, setShowChat] = useState(false);
@@ -38,14 +32,17 @@ export default function Chatbot() {
     e.preventDefault();
     if (!userMessage.trim()) return;
 
+    setLoading(true); // Set loading first
     const newMessage: Message = { role: "user", content: userMessage };
     
-    setMessages(prevMessages => [...prevMessages, newMessage]);
+    // Update messages with user message
+    setMessages(prev => [...prev, newMessage]);
     setUserMessage("");
-    setLoading(true);
-    console.log("Loading started:", loading); // Debug log
 
     try {
+      // Artificial delay to ensure loading state is visible
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
       const chatMessages = messages.slice(1);
       const res = await chatCompletion([...chatMessages, newMessage]);
 
@@ -54,13 +51,12 @@ export default function Chatbot() {
           content: res.content as string,
           role: "assistant",
         };
-        setMessages(prevMessages => [...prevMessages, assistantMessage]);
+        setMessages(prev => [...prev, assistantMessage]);
       }
     } catch (error) {
       console.error("API Error:", error);
     } finally {
       setLoading(false);
-      console.log("Loading ended:", loading); // Debug log
     }
   };
 
@@ -70,7 +66,7 @@ export default function Chatbot() {
 
   return (
     <div className="flex flex-col h-full bg-[#001a00] text-green-500 font-mono">
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-green-500 scrollbar-track-gray-800">
         {messages.map((m, i) => (
           m.role === "assistant" ? (
             <BotMessage {...m} key={i} />
@@ -80,11 +76,13 @@ export default function Chatbot() {
         ))}
         {loading && <LoadingDots />}
       </div>
-      <ChatInput
-        userMessage={userMessage}
-        setUserMessage={setUserMessage}
-        handleSendMessage={handleSendMessage}
-      />
+      <div className="border-t border-green-500/30">
+        <ChatInput
+          userMessage={userMessage}
+          setUserMessage={setUserMessage}
+          handleSendMessage={handleSendMessage}
+        />
+      </div>
     </div>
   );
 }
