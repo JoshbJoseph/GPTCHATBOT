@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 0, 255, 0;  /* Classic green terminal text */
+  --background-rgb: 32, 32, 32;  /* Dark background */
+  --monitor-color: #e0e0d0;      /* Beige monitor color */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,16 +18,47 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-rgb));
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.retro-monitor {
+  background-color: var(--monitor-color);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #808080;
+  box-shadow: 
+    inset 2px 2px 5px rgba(255, 255, 255, 0.7),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.2),
+    5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.screen {
+  background-color: #001a00;
+  border: 3px solid #404040;
+  border-radius: 5px;
+  padding: 20px;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 0.6s infinite;
 }
