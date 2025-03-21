@@ -1,11 +1,24 @@
 import { FormEvent } from "react";
 
+/**
+ * Props interface for ChatInput component
+ * @interface ChatProps
+ * @property {string} userMessage - Current message in the input field
+ * @property {function} setUserMessage - Function to update the message state
+ * @property {function} handleSendMessage - Function to handle message submission
+ */
 type ChatProps = {
   userMessage: string;
   setUserMessage: (value: string) => void;
   handleSendMessage: (e: FormEvent) => void;
 };
 
+/**
+ * ChatInput Component
+ * Renders the input field and send button for the chat interface
+ * @param {ChatProps} props - Component properties
+ * @returns {JSX.Element} Chat input interface component
+ */
 export default function ChatInput({
   userMessage,
   setUserMessage,

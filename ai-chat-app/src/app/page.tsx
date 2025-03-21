@@ -9,7 +9,7 @@ export default function Home() {
           <div className="p-2 border-b border-green-500/30">
             <h1 className="text-xl font-mono text-green-500">Gritty Assessment Chatbot</h1>
           </div>
-          <div className="h-[calc(400px-48px)]"> {/* Subtract header height */}
+          <div className="h-[calc(400px-48px)]"> {}
             <Chatbot />
           </div>
         </div>

@@ -17,9 +17,10 @@ const openAI = new OpenAI({
 });
 
 /**
- * Handles chat completion requests to OpenAI's API.
- * @param chatMessages - Array of chat messages from the user.
- * @returns Response from OpenAI's chat completion API.
+ * Handles chat completion requests to OpenAI's API
+ * @param {Message[]} chatMessages - Array of chat messages from the user
+ * @returns {Promise<OpenAI.Chat.ChatCompletion.Choice.Message>} Response from OpenAI's chat completion API
+ * @throws {Error} When API call fails or quota is exceeded
  */
 export async function chatCompletion(chatMessages: Message[]) {
     console.log("🟢 Incoming messages:", chatMessages);
