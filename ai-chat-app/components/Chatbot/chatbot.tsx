@@ -1,27 +1,15 @@
 "use client";
 import { FormEvent, useState, useEffect } from "react";
-import { TbMessageChatbot } from "react-icons/tb";
 import BotMessage from "./ui/bot-message";
 import UserMessage from "./ui/user-message";
 import ChatInput from "./ui/chat-input";
 import { chatCompletion } from "@/actions";
 
-/**
- * Message type definition for chat interactions
- * @interface Message
- * @property {string} content - The content of the message
- * @property {"user" | "assistant" | "system"} role - The role of the message sender
- */
 export type Message = {
   content: string;
   role: "user" | "assistant" | "system";
 };
 
-/**
- * LoadingDots Component
- * Displays an animated loading indicator with three bouncing dots
- * @returns {JSX.Element} Loading animation component
- */
 const LoadingDots = () => (
   <div className="flex gap-1 items-center p-4 ml-10">
     <span className="text-xs text-green-400 mr-2">AI Assistant is typing</span>
@@ -31,23 +19,13 @@ const LoadingDots = () => (
   </div>
 );
 
-/**
- * Main Chatbot Component
- * Handles the chat interface, message management, and API interactions
- * @returns {JSX.Element} Chatbot interface component
- */
 export default function Chatbot() {
-  const [showChat, setShowChat] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: "Hello, how may I help you today?" },
   ]);
 
-  /**
-   * Handles sending messages and receiving responses
-   * @param {FormEvent} e - Form submission event
-   */
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
     if (!userMessage.trim()) return;
@@ -77,7 +55,7 @@ export default function Chatbot() {
   };
 
   useEffect(() => {
-    console.log("Loading state changed:", loading); // Debug log
+    console.log("Loading state changed:", loading);
   }, [loading]);
 
   return (
